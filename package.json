@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": ">=14.0.0",
+    "yarn": ">=1.22.19",
+    "npm": "please-use-yarn"
+  },
   "dependencies": {
     "next": "13.5.4",
     "react": "^18",
@@ -17,8 +22,14 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.0.3",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }
