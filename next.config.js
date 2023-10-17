@@ -1,12 +1,28 @@
 // import withSass from '@zeit/next-sass'
 const withSass = require('@zeit/next-sass')
+const path = require('path')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  webpack: (config, options) => {
-    config.cache = false
-    return config
+  swcMinify: true,
+  compiler: {
+    styledComponents: true,
   },
+  images: {
+    domains: ['tmdb.org', 'themoviedb.org', 'https://image.tmdb.org/t/p/w500', 'image.tmdb.org'],
+  },
+  // webpack: (config, options) => {
+  //   config.cache = false
+  //   config.module.rules.push({
+  //     test: /\.svg$/,
+  //     use: ['@svgr/webpack'],
+  //   })
+  //   return config
+  // },
+  // sassOptions: {
+  //   includePaths: [path.join(__dirname, 'styles')],
+  //   // prependData: '@import "./styles/common.scss";',
+  // },
 }
 
 module.exports = withSass({

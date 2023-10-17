@@ -1,0 +1,24 @@
+.introHero {
+  // min-height : 30vh;
+  width:100%;
+  .imageWrapper {
+    position : relative;
+    padding-top:50%;
+    background-color: #222;
+    
+    & > img {
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      // position : relative !important;
+      position : absolute;
+      object-fit: cover;
+      filter : brightness(.3);
+    }
+  }
+
+}
+.slick-slider{
+  height: auto;
+}

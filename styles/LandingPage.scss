@@ -1,0 +1,125 @@
+@import './common.scss';
+@import '@/components/landing/styles/IntroHero.scss';
+.itemList {
+  z-index: 1;
+  // @include rightFade();
+  @include responsiveFlexList(125px, 150px, 150px);
+  @include responsiveFlexList(30%, 25%, 20%);
+  &.upcomming {
+    @include responsiveFlexList(200px, 250px, 300px, true);
+    padding: 20px 40px 60px 40px;
+  }
+  &.recommend {
+    @include responsiveFlexList(175px, 200px, 250px);
+  }
+  &.cast {
+    padding: 16px;
+  }
+  &.appearance {
+    padding: 16px;
+  }
+  padding: 20px 40px;
+  &.loading {
+  }
+
+  @keyframes fade-in-out {
+    0% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 0.4;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
+}
+
+.skeletonItemList {
+  @include responsiveFlexList(125px, 150px, 150px);
+  &.upcomming {
+    @include responsiveFlexList(200px, 250px, 300px, true);
+    padding: 20px 40px 60px 40px;
+  }
+  padding: 20px 40px;
+  .skeletonImg {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: #ccc;
+    opacity: 0.7;
+    border-radius: 8px;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.6) 40%,
+        rgba(255, 255, 255, 0) 70%
+      );
+      animation: loading 1s infinite linear;
+    }
+  }
+}
+
+.listContainer {
+  padding: 30px 0px 0px;
+  @include rightFade;
+  .header {
+    display: flex;
+    position: relative;
+    z-index: 3;
+    align-items: center;
+    & > h2 {
+      margin: 0;
+    }
+    display: flex;
+    padding-left: 40px;
+  }
+  &:nth-child(1) {
+    background-image: url('/background.svg');
+    background-position: 50% 100%;
+    // background-size: var(--maxPrimaryPageWidth);
+    background-repeat: no-repeat;
+  }
+  &.upcomming {
+    position: relative;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    transition: all 0.5s;
+
+    .background {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to right, rgba(3, 37, 65, 0.75) 0%, rgba(3, 37, 65, 0.75) 100%);
+      z-index: 0;
+    }
+  }
+  &.recommend {
+    padding: 20px;
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(0);
+  }
+  50%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
