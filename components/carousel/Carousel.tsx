@@ -9,6 +9,7 @@ interface CarouselProps {
   setting?: Settings
 }
 const Carousel = ({ children, fade, slidesToShow, swipe, setting }: CarouselProps) => {
+  console.log('ss')
   const settings = {
     dots: true,
     infinite: true,
@@ -16,6 +17,7 @@ const Carousel = ({ children, fade, slidesToShow, swipe, setting }: CarouselProp
     slidesToShow: slidesToShow,
     slidesToScroll: slidesToShow,
     fade: fade ?? false,
+    // swipe: false,
     ...setting,
   }
   return <Slider {...settings}>{children}</Slider>

@@ -1,3 +1,4 @@
+import ArrowButton from '@/components/carousel/ArrowButton'
 import Carousel from '@/components/carousel/Carousel'
 import { ItemType } from '@/const/toggleBar'
 import { useHelper } from '@/hooks'
@@ -5,6 +6,7 @@ import BackEnd from '@/network'
 import { BaseItem } from '@/types/interface'
 import { MovieResponse } from '@/types/network/response'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 import { useQuery } from 'react-query'
 interface MediaItemListProps {
@@ -12,18 +14,20 @@ interface MediaItemListProps {
 }
 const settings = {
   className: 'item-container',
+  nextArrow: <ArrowButton />,
+  prevArrow: <ArrowButton isLeft={true} />,
   responsive: [
     {
-      breakpoint: 1100,
+      breakpoint: 2000,
       settings: {
-        slidesToShow: 6,
-        slidesToScroll: 6,
+        slidesToShow: 5,
+        slidesToScroll: 5,
         // infinite: true,
         // dots: true,
       },
     },
     {
-      breakpoint: 900,
+      breakpoint: 1100,
       settings: {
         slidesToShow: 4,
         slidesToScroll: 4,
@@ -58,18 +62,22 @@ const MediaItemList = ({ item }: MediaItemListProps) => {
 
   return (
     <div className="section-items">
-      <Carousel setting={settings} slidesToShow={6}>
+      <Carousel setting={settings} slidesToShow={5}>
         {data!.results.map((item) => {
           return (
-            <div className="imageWrapper" key={item.media_type + '_' + item.id}>
-              <Image
-                src={isValidImage(item.poster_path)}
-                alt={item.title ?? item.name}
-                width="0"
-                height="0"
-                sizes="100%"
-                style={{ width: '100%', height: '100%' }}
-              />
+            <div style={{ padding: '0 16px' }} key={item.media_type + '_' + item.id}>
+              <div className="imageWrapper" key={item.media_type + '_' + item.id}>
+                <Link href={''}>
+                  <Image
+                    src={isValidImage(item.poster_path)}
+                    alt={item.title ?? item.name}
+                    width="0"
+                    height="0"
+                    sizes="100%"
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </Link>
+              </div>
             </div>
           )
         })}

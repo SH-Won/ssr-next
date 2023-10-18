@@ -1,0 +1,43 @@
+.arrow-button {
+  // \2190 //left
+  // \2192 //right
+  z-index:1000;
+  position:absolute;
+  .mobile & {
+    display: none;
+  }
+  &.left {
+    // top:0;
+    left: 10px;
+    &::before {
+      content : "<";
+    }
+  }
+  &.right {
+    // top:0;
+    right:10px;
+    &::before {
+      content : ">";
+    }
+  }
+  width: 80px;
+  height:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  &::before {
+    position:absolute;
+    width:60px;
+    height:60px;
+    backdrop-filter: blur(20px);
+    border-radius: 50%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(232,25,41,.16);
+    border: 3px solid hsla(0,0%,82.7%,.1921568627);
+    color : color('white')
+  }
+
+
+}
