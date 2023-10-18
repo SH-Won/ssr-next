@@ -1,5 +1,6 @@
 import ArrowButton from '@/components/carousel/ArrowButton'
 import Carousel from '@/components/carousel/Carousel'
+import { mediaListSetting } from '@/components/carousel/setting'
 import { ItemType } from '@/const/toggleBar'
 import { useHelper } from '@/hooks'
 import BackEnd from '@/network'
@@ -10,64 +11,22 @@ import Link from 'next/link'
 import React from 'react'
 import { useQuery } from 'react-query'
 interface MediaItemListProps {
-  item: ItemType
+  items: MovieResponse<BaseItem[]>
+  loading: boolean
 }
-const settings = {
-  className: 'item-container',
-  nextArrow: <ArrowButton />,
-  prevArrow: <ArrowButton isLeft={true} />,
-  responsive: [
-    {
-      breakpoint: 2000,
-      settings: {
-        slidesToShow: 5,
-        slidesToScroll: 5,
-        // infinite: true,
-        // dots: true,
-      },
-    },
-    {
-      breakpoint: 1100,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        // initialSlide: 2,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-      },
-    },
-  ],
-}
+const MediaItemList = ({ items, loading }: MediaItemListProps) => {
+  const { isValidImage, getDetailPageUrl } = useHelper()
 
-const MediaItemList = ({ item }: MediaItemListProps) => {
-  const { isValidImage } = useHelper()
-  const { data, isLoading } = useQuery<MovieResponse<BaseItem[]>>(
-    [item.id, 1],
-    () =>
-      BackEnd.CommonAPI.getItems({
-        url: item.value,
-        page: 1,
-      }),
-    {
-      staleTime: Infinity,
-    }
-  )
-
-  if (isLoading) return <div>null</div>
+  if (loading) return <div>null</div>
 
   return (
-    <div className="section-items">
-      <Carousel setting={settings} slidesToShow={5}>
-        {data!.results.map((item) => {
+    <section className="section-items">
+      <Carousel setting={mediaListSetting} slidesToShow={5}>
+        {items!.results.map((item) => {
           return (
             <div style={{ padding: '0 16px' }} key={item.media_type + '_' + item.id}>
               <div className="imageWrapper" key={item.media_type + '_' + item.id}>
-                <Link href={''}>
+                <Link href={getDetailPageUrl(item)}>
                   <Image
                     src={isValidImage(item.poster_path)}
                     alt={item.title ?? item.name}
@@ -82,7 +41,7 @@ const MediaItemList = ({ item }: MediaItemListProps) => {
           )
         })}
       </Carousel>
-    </div>
+    </section>
   )
 }
 

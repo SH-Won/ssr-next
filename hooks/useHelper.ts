@@ -32,6 +32,10 @@ const useHelper = () => {
     const [year, month, day] = date.split('-')
     return `${month}월 ${day}, ${year}`
   }
+  const isValidOriginalImage = (imagePath: string) => {
+    if (!imagePath) return '/noImage.svg'
+    return process.env.NEXT_PUBLIC_BASE_BACK_DROP_ORIGINAL_IMAGE_URL + imagePath
+  }
 
   return {
     goDetailPage,
@@ -40,6 +44,7 @@ const useHelper = () => {
     isValidImage,
     getDetailPageUrl,
     getConvertedDate,
+    isValidOriginalImage,
   }
 }
 export { useHelper }

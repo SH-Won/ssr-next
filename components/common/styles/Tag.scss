@@ -3,7 +3,8 @@
   color : color('white');
   border : 1px solid color('grey_bbb');
   border-radius: 2px;
-  padding:1px;
+  display:inline-block;
+  padding: 4px;
   &.red {
     color : color('red');
     border : 1px solid color('red');

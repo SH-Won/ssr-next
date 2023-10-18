@@ -7,14 +7,14 @@
     display: none;
   }
   &.left {
-    // top:0;
+    top:0;
     left: 10px;
     &::before {
       content : "<";
     }
   }
   &.right {
-    // top:0;
+    top:0;
     right:10px;
     &::before {
       content : ">";

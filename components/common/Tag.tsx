@@ -5,7 +5,7 @@ interface TagProps {
   color?: string
 }
 const Tag = ({ text, color }: TagProps) => {
-  return <span className={`tag ${color!}`}>{text}</span>
+  return <span className={`tag ${color ?? ''}`}>{text}</span>
 }
 
 export default Tag

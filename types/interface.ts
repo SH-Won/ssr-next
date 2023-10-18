@@ -1,3 +1,5 @@
+import { IGenre } from './network/response'
+
 export interface ILoginProvider {
   name: string
   svgPath: string
@@ -46,14 +48,18 @@ export interface BaseItem {
   video: boolean
   vote_average: number
   vote_count: number
+  genres: IGenre[]
 }
-
+interface ISpokenLanguage {
+  english_name: string
+  iso_639_1: string
+  name: string
+}
 export interface BaseItemDetail extends BaseItem {
   adult: boolean
   backdrop_path: string
   belongs_to_collection: object
   budget: number
-  genres: object
   homepage: string
   id: number
   imdb_id: string
@@ -69,7 +75,7 @@ export interface BaseItemDetail extends BaseItem {
   first_air_date?: string
   revenue: number
   runtime: number
-  spoken_languages: object
+  spoken_languages: ISpokenLanguage[]
   status: string
   tagline: string
   title: string
