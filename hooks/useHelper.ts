@@ -21,9 +21,11 @@ const useHelper = () => {
   const goActorPage = (id: BaseCast['id']) => {
     navigate.push(`/person/${id}`)
   }
-  const isValidImage = (imagePath: string) => {
+  const isValidImage = (imagePath: string, isBackDropImage = false) => {
     if (!imagePath) return '/noImage.svg'
-    return process.env.NEXT_PUBLIC_BASE_IMAGE_URL + imagePath
+    return !isBackDropImage
+      ? process.env.NEXT_PUBLIC_BASE_IMAGE_URL + imagePath
+      : process.env.NEXT_PUBLIC_BASE_BACK_DROP_IMAGE_URL + imagePath
   }
   const getConvertedDate = (date: string | undefined) => {
     if (!date || date === '') return ''

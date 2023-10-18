@@ -27,4 +27,6 @@ export const TRENDING_CATEGORY = {
   ALL: 'all',
   DAY: 'day',
   WEEK: 'week',
+  MOVIE: 'movie',
+  TV: 'tv',
 }

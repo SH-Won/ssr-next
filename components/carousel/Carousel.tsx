@@ -1,17 +1,22 @@
 import React from 'react'
-import Slider from 'react-slick'
+import Slider, { Settings } from 'react-slick'
 interface CarouselProps {
   items?: any[]
   children: JSX.Element | JSX.Element[]
+  fade?: boolean
+  slidesToShow?: number
+  swipe?: boolean
+  setting?: Settings
 }
-const Carousel = ({ children }: CarouselProps) => {
+const Carousel = ({ children, fade, slidesToShow, swipe, setting }: CarouselProps) => {
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    fade: true,
+    slidesToShow: slidesToShow,
+    slidesToScroll: slidesToShow,
+    fade: fade ?? false,
+    ...setting,
   }
   return <Slider {...settings}>{children}</Slider>
 }

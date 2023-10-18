@@ -83,6 +83,20 @@ export const TOGGLE_TRENDING_ITEMS: ItemType[] = [
     value:
       '/' + TRENDING_CATEGORY.prefix + '/' + TRENDING_CATEGORY.ALL + '/' + TRENDING_CATEGORY.WEEK,
   },
+  {
+    id: TRENDING_CATEGORY.prefix + '_' + TRENDING_CATEGORY.MOVIE + '_' + TRENDING_CATEGORY.WEEK,
+    name: 'MOVIE_WEEK',
+    order: 2,
+    value:
+      '/' + TRENDING_CATEGORY.prefix + '/' + TRENDING_CATEGORY.MOVIE + '/' + TRENDING_CATEGORY.WEEK,
+  },
+  {
+    id: TRENDING_CATEGORY.prefix + '_' + TRENDING_CATEGORY.TV + '_' + TRENDING_CATEGORY.WEEK,
+    name: 'TV_WEEK',
+    order: 3,
+    value:
+      '/' + TRENDING_CATEGORY.prefix + '/' + TRENDING_CATEGORY.TV + '/' + TRENDING_CATEGORY.WEEK,
+  },
 ]
 // 임시 토글바 config
 export const TOGGLE_UPCOMMING: ItemType[] = [

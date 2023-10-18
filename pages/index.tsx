@@ -8,22 +8,30 @@ import { dehydrate, QueryClient, useQuery, useQueryClient } from 'react-query'
 import BackEnd from '@/network'
 import ToggleItemSection from '@/components/ToggleItemSection'
 import { useHelper } from '@/hooks'
-import IntroHero from '@/components/landing/IntroHero'
+import IntroHero from '@/components/landing/intro'
+import { MovieResponse } from '@/types/network/response'
+import { BaseItem } from '@/types/interface'
+import MediaItemList from '@/components/landing/section/MediaItemList'
 const inter = Inter({ subsets: ['latin'] })
-const queryClient = new QueryClient()
+// const queryClient = new QueryClient()
 export const getServerSideProps: GetStaticProps = async (ctx) => {
-  // const queryClient = new QueryClient()
+  const queryClient = new QueryClient()
   try {
-    await queryClient.prefetchQuery(
-      [TOGGLE_TRENDING_ITEMS[0].id, 1],
-      () =>
-        BackEnd.CommonAPI.getItems({
-          url: TOGGLE_TRENDING_ITEMS[0].value,
-          page: 1,
-        }),
-      {
-        staleTime: Infinity,
-      }
+    const array = [TOGGLE_TRENDING_ITEMS[0], TOGGLE_TRENDING_ITEMS[2], TOGGLE_TRENDING_ITEMS[3]]
+    await Promise.all(
+      array.map((item) =>
+        queryClient.prefetchQuery(
+          [item.id, 1],
+          () =>
+            BackEnd.CommonAPI.getItems({
+              url: item.value,
+              page: 1,
+            }),
+          {
+            staleTime: Infinity,
+          }
+        )
+      )
     )
     const data = queryClient.getQueryData([TOGGLE_TRENDING_ITEMS[0].id, 1])
     return {
@@ -39,7 +47,7 @@ export const getServerSideProps: GetStaticProps = async (ctx) => {
   }
 }
 export default function Home() {
-  const { data, isLoading, isRefetching } = useQuery<{ results: any[] }>(
+  const { data, isLoading, isRefetching } = useQuery<MovieResponse<BaseItem[]>>(
     [TOGGLE_TRENDING_ITEMS[0].id, 1],
     () =>
       BackEnd.CommonAPI.getItems({
@@ -64,6 +72,8 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <IntroHero items={data!.results.slice(0, 5)} />
+        <MediaItemList item={TOGGLE_TRENDING_ITEMS[2]} />
+        <MediaItemList item={TOGGLE_TRENDING_ITEMS[3]} />
       </main>
     </>
   )

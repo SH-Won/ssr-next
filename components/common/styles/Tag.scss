@@ -1,0 +1,16 @@
+.tag {
+  @include typeface('Paragraph_3');
+  color : color('white');
+  border : 1px solid color('grey_bbb');
+  border-radius: 2px;
+  padding:1px;
+  &.red {
+    color : color('red');
+    border : 1px solid color('red');
+  }
+  &.orange {
+    color: color('orange');
+    border : 1px solid color('orange')
+
+  }
+}

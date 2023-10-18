@@ -1,7 +1,7 @@
 export interface ILoginProvider {
   name: string
   svgPath: string
-  providerName: 'google' | 'facebook' | 'gothub'
+  providerName: 'google' | 'facebook' | 'github'
   onClick: (providerName: ILoginProvider['name']) => void
 }
 export type IOutletContext = {
@@ -32,6 +32,7 @@ export interface BaseItem {
   backdrop_path: string
   genre_ids: object
   id: number
+  media_type: string
   original_language: string
   original_title: string
   original_name?: string

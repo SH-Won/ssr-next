@@ -1,20 +1,82 @@
 .introHero {
-  // min-height : 30vh;
   width:100%;
-  .imageWrapper {
-    position : relative;
-    padding-top:50%;
-    background-color: #222;
-    
-    & > img {
-      top:0;
-      left:0;
-      width:100%;
+  .hero_content {
+    position:relative;
+    width:100%;
+    height:100%;
+    & >.imageWrapper {
+      position : relative;
+      padding-top:60%;
+      .mobile & {
+        padding-top:120%;
+      }
+      background-color: #222;
+      
+      & > img {
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        position : absolute;
+        object-fit: cover;
+        filter : brightness(.3);
+      }
+    }
+
+    & >.content {
+      position:absolute;
+      width: calc(100% - 200px);
+      padding:24px;
+      box-sizing: border-box;
+      .mobile & {
+        width:100%;
+      }
+      top:65%;
+      left:50%;
+      transform : translate(-50%, -50%);
+      display:flex;
+      flex-direction: column;
+      // background-color: rgba(33,33,33,.7);
+      background: linear-gradient(90deg,rgba(17,17,17,.7019607843) 40%,transparent);
+
+
+      justify-content: center;
       height:100%;
-      // position : relative !important;
-      position : absolute;
-      object-fit: cover;
-      filter : brightness(.3);
+      min-height:320px;
+      max-height:400px;
+      
+      & >.content-info-tags {
+        position: absolute;
+        top:20px;
+        left:20px;
+        display:flex;
+        align-items: center;
+        gap:6px;
+        // margin-bottom:20px;
+      }
+
+      & >hr {
+        border: 0;
+        width: 100%;
+        height: 1px;
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        background-image: linear-gradient(270deg,#898989,hsla(0,0%,100%,0));
+        margin: 20px 0;
+      }
+      & >.title {
+        color : color('white')
+      }
+      & >.overview {
+        color : color('grey_bbb');
+        @include typeface('Paragraph_2');
+      }
+      & >.buttons {
+        margin-top:10px;
+        display:flex;
+
+      }
+
     }
   }
 
@@ -22,3 +84,7 @@
 .slick-slider{
   height: auto;
 }
+
+
+// slick carousel direction button 
+//     background: linear-gradient(0,#000,transparent);
