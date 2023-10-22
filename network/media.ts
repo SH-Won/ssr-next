@@ -6,7 +6,7 @@ export const getDetail = async <T>(mediaType: T, id: number) => {
   const response = await AxiosInstance({
     url: `/${mediaType}/${id}`,
     params: {
-      language: 'ko-KR',
+      language: 'en-US',
     },
   })
   return response.data

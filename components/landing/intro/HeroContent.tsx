@@ -1,43 +1,60 @@
+import BackGroundImage from '@/components/common/BackGroundImage'
 import Tag from '@/components/common/Tag'
+import MediaItem from '@/components/media/MediaItem'
 import { useHelper } from '@/hooks'
 import { BaseItem } from '@/types/interface'
-import { Button, CircularProgressBar, Colors } from 'my-react-component'
-import Image from 'next/image'
 import React from 'react'
+import styled from 'styled-components'
 
 interface HeroContentProps {
   item: BaseItem
 }
+const ContentWrapper = styled.div`
+  position: absolute;
+  width: calc(100% - 200px);
+  padding: 24px;
+  box-sizing: border-box;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 50px));
+  display: flex;
+  flex-direction: column;
+  // background-color: rgba(33,33,33,.7);
+  background: linear-gradient(90deg, rgba(17, 17, 17, 0.7019607843) 40%, transparent);
+
+  justify-content: center;
+  height: 100%;
+  min-height: 320px;
+  max-height: 400px;
+  .mobile & {
+    width: 100%;
+  }
+  .tablet & {
+    padding: 24px 100px;
+    width: 100%;
+  }
+`
 
 const HeroContent = ({ item }: HeroContentProps) => {
   const { isValidImage } = useHelper()
   return (
     <div className="hero_content">
-      <div className="imageWrapper" key={item.id}>
-        <Image
-          src={isValidImage(item.backdrop_path, true)}
-          alt={item.title ?? item.name}
-          width="0"
-          height="0"
-          sizes="100vw"
-          style={{ width: '100%', height: '100%' }}
-        />
-      </div>
-      <div className="content">
-        <div className="content-info-tags">
-          <Tag text={item.media_type.toUpperCase()} color="red" />
-          <Tag text={item.original_language.toUpperCase()} color="orange" />
-          <CircularProgressBar size={30} percent={Math.floor(Math.floor(item.vote_average * 10))} />
-        </div>
-        <h3 className="title">{item.title ?? item.name}</h3>
-        <hr></hr>
-        <p className="overview">{item.overview}</p>
-        <div className="buttons">
-          <Button size="medium" color={Colors.red} fontColor={Colors.white}>
-            Trailer
-          </Button>
-        </div>
-      </div>
+      <BackGroundImage.Main
+        ratio={0.5}
+        src={isValidImage(item.backdrop_path, true)}
+        alt={item.title ?? item.name}
+      />
+      <ContentWrapper>
+        <MediaItem item={item}>
+          <MediaItem.PosterImage />
+          <MediaItem.InforMationWrapper>
+            <MediaItem.Tags />
+            <MediaItem.Title fontSize={16} />
+            <MediaItem.HR />
+            <MediaItem.Overview />
+          </MediaItem.InforMationWrapper>
+        </MediaItem>
+      </ContentWrapper>
     </div>
   )
 }

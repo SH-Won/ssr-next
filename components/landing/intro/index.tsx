@@ -6,18 +6,19 @@ import HeroContent from './HeroContent'
 import { introHeroSetting } from '@/components/carousel/setting'
 import { TOGGLE_TRENDING_ITEMS } from '@/const/toggleBar'
 import { MovieResponse } from '@/types/network/response'
+import BackGroundImage from '../../common/BackGroundImage'
 
 const IntroHero = () => {
   const { data, isLoading, isFetching } = useCommonData<MovieResponse<BaseItem[]>>(
     TOGGLE_TRENDING_ITEMS[0]
   )
-  if (isLoading || isFetching) return <></>
+  console.log(data, 'intro')
+  if (isLoading || isFetching)
+    return <BackGroundImage.Main src="/next.svg" alt="loading" ratio={0.5}></BackGroundImage.Main>
   return (
     <div className="introHero">
       <Carousel fade={true} slidesToShow={1} setting={introHeroSetting}>
-        {data!.results.slice(0, 5).map((item) => (
-          <HeroContent key={item.id} item={item} />
-        ))}
+        {data && data!.results.slice(0, 5).map((item) => <HeroContent key={item.id} item={item} />)}
       </Carousel>
     </div>
   )

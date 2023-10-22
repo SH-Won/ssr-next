@@ -14,6 +14,7 @@
     "npm": "please-use-yarn"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.36.1",
     "axios": "^1.5.1",
     "i18next": "^22.4.14",
     "my-react-component": "https://github.com/SH-Won/react-component.git#a0cbc399a051fb9326cab1a37e8137ea96045036",
@@ -21,7 +22,6 @@
     "react": "^18",
     "react-dom": "^18",
     "react-i18next": "^12.2.0",
-    "react-query": "^3.39.3",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.0"

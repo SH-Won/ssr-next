@@ -6,7 +6,7 @@ const AxiosInstance = axios.create({
     Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
     'Content-Type': 'application/json;charset=utf-8',
   },
-  timeout: 2000,
+  // timeout: 2000,
 })
 
 export default AxiosInstance

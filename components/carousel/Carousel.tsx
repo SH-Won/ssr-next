@@ -2,7 +2,7 @@ import React from 'react'
 import Slider, { Settings } from 'react-slick'
 interface CarouselProps {
   items?: any[]
-  children: JSX.Element | JSX.Element[]
+  children: JSX.Element | JSX.Element[] | undefined
   fade?: boolean
   slidesToShow?: number
   swipe?: boolean

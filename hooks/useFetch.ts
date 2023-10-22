@@ -2,7 +2,7 @@ import { ItemType } from '@/const/toggleBar'
 import BackEnd from '@/network'
 import { BaseItem, BaseItemDetail, IMedia, IMediaType } from '@/types/interface'
 import { MovieResponse } from '@/types/network/response'
-import { useQuery, UseQueryResult } from 'react-query'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 type IGenericFunc<T extends IMediaType, U> = (mediaType: T, id: IMedia['id']) => UseQueryResult<U>
 type IExcludeMediaType = Exclude<IMediaType, 'person'>
 export const QUERY_KEY = {
@@ -17,6 +17,7 @@ export const QUERY_KEY = {
   VIDEO: 'video',
   SIMILAR: 'similar',
 }
+
 export const useCommonData = <T>(query: ItemType): UseQueryResult<T> => {
   return useQuery(
     [query.id, query.page],
@@ -25,14 +26,18 @@ export const useCommonData = <T>(query: ItemType): UseQueryResult<T> => {
         url: query.value,
         page: query.page ?? 1,
       }),
+
     {
       staleTime: Infinity,
+      // cacheTime: 0,
     }
   )
 }
 export const useDetailData: IGenericFunc<IMediaType, BaseItemDetail> = (mediaType, id) => {
   return useQuery([mediaType, id, QUERY_KEY.DETAIL], () => BackEnd.media.getDetail(mediaType, id), {
     staleTime: Infinity,
+    // cacheTime: 0,
+    enabled: !!id,
   })
 }
 export const useSimilarData: IGenericFunc<IMediaType, MovieResponse<BaseItem[]>> = (
@@ -44,6 +49,8 @@ export const useSimilarData: IGenericFunc<IMediaType, MovieResponse<BaseItem[]>>
     () => BackEnd.media.getSimilar(mediaType, id),
     {
       staleTime: Infinity,
+      // cacheTime: 0,
+      enabled: !!id,
     }
   )
 }
