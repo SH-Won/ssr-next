@@ -1,6 +1,7 @@
 .section-items {
   margin-top:50px;
   width: 100%;
+  padding:0px 20px;
   /* the slides */
 // & > .slick-slide {
 //   margin: 0 10px;
@@ -14,7 +15,9 @@
     padding-bottom:150%;
     // padding-right:16px;
     // padding:0 6px;
+
     margin: 50px 6px;
+    // box-sizing: border-box;
     & > img {
       top:0;
       left:0;

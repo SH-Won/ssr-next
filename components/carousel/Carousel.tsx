@@ -12,7 +12,7 @@ const Carousel = ({ children, fade, slidesToShow, swipe, setting }: CarouselProp
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1000,
     slidesToShow: slidesToShow,
     slidesToScroll: slidesToShow,
     fade: fade ?? false,

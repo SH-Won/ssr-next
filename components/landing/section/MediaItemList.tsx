@@ -7,6 +7,7 @@ import { useHelper } from '@/hooks'
 import BackEnd from '@/network'
 import { BaseItem } from '@/types/interface'
 import { MovieResponse } from '@/types/network/response'
+import { RatioCardImage } from 'my-react-component'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -24,7 +25,7 @@ const MediaItemList = ({ items, loading }: MediaItemListProps) => {
           ? Array(10)
               .fill(0)
               .map((value, index) => (
-                <div key={value + index}>
+                <div key={value + index} style={{ margin: '50px 6px' }}>
                   <div key={value + index} className="imageWrapper">
                     <div className={'skeletonImg'}></div>
                   </div>
@@ -33,12 +34,12 @@ const MediaItemList = ({ items, loading }: MediaItemListProps) => {
           : items &&
             items!.results.map((item) => {
               return (
-                <div style={{ padding: '0 16px' }} key={item.media_type + '_' + item.id}>
+                <div key={item.media_type + '_' + item.id}>
                   <Link
                     href={`/${item.media_type}/${item.id}`}
                     as={`/${item.media_type}/${item.id}`}
                   >
-                    <div className="imageWrapper" key={item.media_type + '_' + item.id}>
+                    {/* <div className="imageWrapper" key={item.media_type + '_' + item.id}>
                       <Image
                         src={isValidImage(item.poster_path)}
                         alt={item.title ?? item.name}
@@ -47,7 +48,10 @@ const MediaItemList = ({ items, loading }: MediaItemListProps) => {
                         sizes="fill"
                         // layout="responsive"
                       />
-                      {/* <img src={isValidImage(item.poster_path)} alt={item.title ?? item.name} /> */}
+                      <img src={isValidImage(item.poster_path)} alt={item.title ?? item.name} />
+                    </div> */}
+                    <div style={{ margin: '50px 6px' }}>
+                      <RatioCardImage imageUrl={isValidImage(item.poster_path)} ratio={1.5} />
                     </div>
                   </Link>
                 </div>

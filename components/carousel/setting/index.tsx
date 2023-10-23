@@ -1,13 +1,15 @@
+import { Settings } from 'react-slick'
 import ArrowButton from '../ArrowButton'
 
 export const introHeroSetting = {
   nextArrow: <ArrowButton />,
   prevArrow: <ArrowButton isLeft={true} />,
 }
-export const mediaListSetting = {
+export const mediaListSetting: Settings = {
   className: 'item-container',
   nextArrow: <ArrowButton />,
   prevArrow: <ArrowButton isLeft={true} />,
+
   responsive: [
     {
       breakpoint: 2000,

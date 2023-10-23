@@ -1,6 +1,6 @@
 import { useHelper } from '@/hooks'
 import { BaseItem, BaseItemDetail } from '@/types/interface'
-import { Button, CircularProgressBar, Colors, Element } from 'my-react-component'
+import { Button, CircularProgressBar, Colors, Element, RatioCardImage } from 'my-react-component'
 import { createContext, ReactElement, ReactNode, useContext } from 'react'
 import styled from 'styled-components'
 import Tag from '../common/Tag'
@@ -44,13 +44,13 @@ const ItemTags = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 60px;
+  gap: 6px;
 `
 const ItemPosterImageWrapper = styled.div`
   display: none;
   .desktop & {
     display: flex;
-    max-width: 250px;
+    max-width: 220px;
   }
   position: relative;
   & > img {
@@ -100,6 +100,8 @@ const ItemDetail = styled(ItemLanguage)<{ children: ReactElement<HTMLLIElement>[
 `
 
 const ItemInforMationWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   color: ${({ theme }) => theme.color.white};
   justify-content: center;

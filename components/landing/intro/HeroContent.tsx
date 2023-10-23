@@ -10,6 +10,7 @@ interface HeroContentProps {
   item: BaseItem
 }
 const ContentWrapper = styled.div`
+  max-width: 900px;
   position: absolute;
   width: calc(100% - 200px);
   padding: 24px;
@@ -49,7 +50,7 @@ const HeroContent = ({ item }: HeroContentProps) => {
           <MediaItem.PosterImage />
           <MediaItem.InforMationWrapper>
             <MediaItem.Tags />
-            <MediaItem.Title fontSize={16} />
+            <MediaItem.Title fontSize={24} />
             <MediaItem.HR />
             <MediaItem.Overview />
           </MediaItem.InforMationWrapper>

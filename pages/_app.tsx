@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { ThemeProvider } from 'styled-components'
 import { theme, mixins } from '@/styles/theme'
 import ResponsiveWindow from '@/layout/ResponsiveWindow'
+import Navbar from '@/components/Navbar/Navbar'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
@@ -23,6 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedProps}>
           <ThemeProvider theme={theme}>
+            <Navbar />
             <ResponsiveWindow>
               <Component {...pageProps} />
             </ResponsiveWindow>
