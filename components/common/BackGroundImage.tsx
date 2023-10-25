@@ -17,7 +17,7 @@ export const DetailImageContainer = styled.div<Omit<ImageContainerProps, 'ratio'
     width: 100%;
     height: 100vh;
     object-fit: cover;
-    opacity: 0;
+    /* opacity: 0; */
     transition: opacity 0.5s ease-in;
     filter: brightness(0.3);
     -webkit-filter: brightness(0.3);

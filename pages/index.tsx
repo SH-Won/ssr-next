@@ -10,6 +10,8 @@ import { useCommonData } from '@/hooks'
 import { MovieResponse } from '@/types/network/response'
 import { BaseItem } from '@/types/interface'
 import Link from 'next/link'
+import { useEffect } from 'react'
+import axios from 'axios'
 const queryClient = new QueryClient()
 // export const getServerSideProps: GetStaticProps = async (ctx) => {
 //   try {
@@ -59,6 +61,12 @@ export default function Home() {
   // console.log(trendingMovies)
   // console.log(useQueryClient().getQueryData([TOGGLE_TRENDING_ITEMS[2].id, 1]))
 
+  useEffect(() => {
+    ;(async () => {
+      const response = await axios.get('http://localhost:5000/api/users/auth')
+      console.log(response)
+    })()
+  })
   return (
     <>
       <Head>

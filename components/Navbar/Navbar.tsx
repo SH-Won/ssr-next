@@ -1,8 +1,9 @@
 import { Colors, Element } from 'my-react-component'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { media } from '@/styles/theme'
+import Link from 'next/link'
 const Nav = styled.nav`
   width: 100%;
   height: 50px;
@@ -11,6 +12,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   padding: 0 20px;
   gap: 20px;
+  background: rgba(0, 0, 0, 0.212);
 `
 const NavItemContainer = styled.ul<{ open: boolean }>`
   display: flex;
@@ -31,7 +33,6 @@ const NavItemContainer = styled.ul<{ open: boolean }>`
     opacity: ${(props) => (props.open ? '1' : '0')};
     max-height: ${(props) => (props.open ? '100%' : '0')};
     height: ${(props) => (props.open ? '100vh' : '0')};
-    /* transition: all 0.3s ease-in; */
     transition:
       all 0.5s ease-out,
       background 0.6s ease-out;
@@ -51,6 +52,7 @@ const NaviItem = styled.li`
 const Logo = styled.div`
   display: flex;
   align-items: center;
+  background-color: white;
 `
 const HamburgerWrapper = styled.div`
   display: none;
@@ -76,7 +78,9 @@ const Navbar = () => {
   return (
     <Nav>
       <Logo>
-        <Image width={70} height={40} src="/next.svg" alt="logo" />
+        <Link href="/">
+          <Image width={70} height={40} src="/next.svg" alt="logo" />
+        </Link>
       </Logo>
       <NavItemContainer open={open}>
         {navItems.map((item, key) => (
