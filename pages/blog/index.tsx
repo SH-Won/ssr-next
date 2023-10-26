@@ -1,6 +1,7 @@
 import PostCard from '@/components/card/PostCard'
 
 import { datas } from '@/const/mock'
+import RequiredAuth from '@/layout/RequiredAuth'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import styled from 'styled-components'
@@ -123,4 +124,12 @@ const MainPage = () => {
   )
 }
 
-export default MainPage
+const withAuth = (Component) => (props) => {
+  return (
+    <RequiredAuth>
+      <Component {...props} />
+    </RequiredAuth>
+  )
+}
+
+export default withAuth(MainPage)

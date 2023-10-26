@@ -1,4 +1,5 @@
 import { useSearch } from '@/hooks'
+import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { InputBox, Colors, Button } from 'my-react-component'
 import { useRouter } from 'next/router'
@@ -26,21 +27,33 @@ const ButtonWrapper = styled.div`
     flex: 1;
   }
 `
-const RegisterPage = () => {
+const LoginPage = () => {
   const { searchText: email, onChangeText: onChangeEmail, emailValidator } = useSearch()
   const { searchText: password, onChangeText: onChangePasswoard, passwordValidator } = useSearch()
+  const { setAuth } = useAuth()
   const router = useRouter()
   const onSubmit = async () => {
     const user = {
       email,
       password,
     }
-    await axios.post('http://localhost:5000/api/users/login', user).then((response) => {
-      if (response.data.success) {
-        console.log(response.data)
-        router.push('/')
-      }
-    })
+    await axios
+      .post('http://localhost:5000/login', user, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data) {
+          const accessToken = response.data.accessToken
+          console.log(accessToken)
+          setAuth((prev) => ({
+            ...prev,
+            email,
+            accessToken,
+          }))
+          router.push('/')
+        }
+      })
   }
   return (
     <Container>
@@ -70,4 +83,4 @@ const RegisterPage = () => {
   )
 }
 
-export default RegisterPage
+export default LoginPage

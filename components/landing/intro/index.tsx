@@ -12,7 +12,6 @@ const IntroHero = () => {
   const { data, isLoading, isFetching } = useCommonData<MovieResponse<BaseItem[]>>(
     TOGGLE_TRENDING_ITEMS[0]
   )
-  console.log(data, 'intro')
   if (isLoading || isFetching)
     return <BackGroundImage.Main src="/next.svg" alt="loading" ratio={0.5}></BackGroundImage.Main>
   return (

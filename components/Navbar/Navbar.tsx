@@ -64,7 +64,12 @@ const HamburgerWrapper = styled.div`
   }
 `
 
-const navItems = ['영화', 'TV', 'ETC']
+const navItems = [
+  {
+    name: 'blog',
+    url: '/blog',
+  },
+]
 const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false)
   useEffect(() => {
@@ -84,7 +89,9 @@ const Navbar = () => {
       </Logo>
       <NavItemContainer open={open}>
         {navItems.map((item, key) => (
-          <NaviItem key={item}>{item}</NaviItem>
+          <NaviItem key={item.name}>
+            <Link href={item.url}>{item.name}</Link>
+          </NaviItem>
         ))}
       </NavItemContainer>
       <HamburgerWrapper onClick={() => setOpen((prev) => !prev)}>

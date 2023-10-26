@@ -37,7 +37,7 @@ const RegisterPage = () => {
       email,
       password,
     }
-    await axios.post('http://localhost:5000/api/users/register', user).then((response) => {
+    await axios.post('http://localhost:5000/register', user).then((response) => {
       if (response.data.success) {
         console.log(response.data)
         router.replace('/')

@@ -11,7 +11,7 @@ import { MovieResponse } from '@/types/network/response'
 import { BaseItem } from '@/types/interface'
 import Link from 'next/link'
 import { useEffect } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 const queryClient = new QueryClient()
 // export const getServerSideProps: GetStaticProps = async (ctx) => {
 //   try {
@@ -50,23 +50,13 @@ const queryClient = new QueryClient()
 //   return query.state.data
 // }
 export default function Home() {
-  // console.log(props)
-  // console.log(useQueryClient().getQueryData(['trending_day', 1]))
   const { data: trendingMovies, isLoading: trendingMovieLoading } = useCommonData<
     MovieResponse<BaseItem[]>
   >(TOGGLE_TRENDING_ITEMS[2])
   const { data: trendingTvs, isLoading: trendingTvLoading } = useCommonData<
     MovieResponse<BaseItem[]>
   >(TOGGLE_TRENDING_ITEMS[3])
-  // console.log(trendingMovies)
-  // console.log(useQueryClient().getQueryData([TOGGLE_TRENDING_ITEMS[2].id, 1]))
 
-  useEffect(() => {
-    ;(async () => {
-      const response = await axios.get('http://localhost:5000/api/users/auth')
-      console.log(response)
-    })()
-  })
   return (
     <>
       <Head>

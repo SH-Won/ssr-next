@@ -12,6 +12,7 @@ import { ThemeProvider } from 'styled-components'
 import { theme, mixins } from '@/styles/theme'
 import ResponsiveWindow from '@/layout/ResponsiveWindow'
 import Navbar from '@/components/Navbar/Navbar'
+import { RecoilRoot } from 'recoil'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
@@ -21,16 +22,18 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>next boiler</title>
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedProps}>
-          <ThemeProvider theme={theme}>
-            <Navbar />
-            <ResponsiveWindow>
-              <Component {...pageProps} />
-            </ResponsiveWindow>
-          </ThemeProvider>
-        </Hydrate>
-      </QueryClientProvider>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedProps}>
+            <ThemeProvider theme={theme}>
+              <Navbar />
+              <ResponsiveWindow>
+                <Component {...pageProps} />
+              </ResponsiveWindow>
+            </ThemeProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </RecoilRoot>
     </>
   )
 }
