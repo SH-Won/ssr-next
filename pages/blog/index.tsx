@@ -1,7 +1,8 @@
 import PostCard from '@/components/card/PostCard'
 
 import { datas } from '@/const/mock'
-import RequiredAuth from '@/layout/RequiredAuth'
+import RequiredAuth, { withAuth } from '@/layout/RequiredAuth'
+import { axiosAuthInstance } from '@/network/axios'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import styled from 'styled-components'
@@ -72,7 +73,41 @@ const PostCardWrapper = styled.div`
   justify-content: center;
   gap: 10px;
 `
-const MainPage = () => {
+export const getServerSideProps = async () => {
+  try {
+    const response = await axiosAuthInstance.get('/product',{
+      withCredentials: true,
+    })
+    console.log(response)
+    return {
+      props : {
+        data : response.data
+      }
+    }
+
+  }catch(e){
+    return {
+      props : {}
+    }
+  }
+  
+}
+export type IPost = {
+  _id : string,
+  // productId: number
+  label: string
+  description: string
+  imageUrl: string
+  imageUrls?: string []
+  category: number
+  }
+interface Props {
+  data : {
+    products : IPost[]
+  }
+}
+const MainPage = (props : Props) => {
+  console.log(props)
   const [selectedIndex, setSelectedIndex] = useState<number>(6)
   const [opacity, setOpacity] = useState<number>(1)
   const handleLeft = () => {
@@ -95,10 +130,9 @@ const MainPage = () => {
     <MainContainer>
       <BackGroundImage opacity={opacity}>
         <Image
-          width={600}
-          height={1000}
-          src={datas[selectedIndex].url}
-          alt={datas[selectedIndex].title}
+          fill
+          src={datas[selectedIndex].imageUrl}
+          alt={datas[selectedIndex].label}
         />
       </BackGroundImage>
       <CardContainer>
@@ -116,20 +150,12 @@ const MainPage = () => {
       </CardContainer>
 
       <PostCardWrapper>
-        {datas.map((data) => (
-          <PostCard key={data.title} post={data} />
+        {props.data.products.map((data) => (
+          <PostCard key={data.label + data._id} post={data} />
         ))}
       </PostCardWrapper>
     </MainContainer>
   )
 }
 
-const withAuth = (Component) => (props) => {
-  return (
-    <RequiredAuth>
-      <Component {...props} />
-    </RequiredAuth>
-  )
-}
-
-export default withAuth(MainPage)
+export default withAuth<Props>(MainPage)

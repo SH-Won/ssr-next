@@ -1,4 +1,5 @@
 import { Data } from '@/const/mock'
+import { IPost } from '@/pages/blog'
 import { Button, Colors, RatioCardImage } from 'my-react-component'
 import Image from 'next/image'
 import React from 'react'
@@ -20,36 +21,47 @@ const Container = styled.div`
   }
 `
 interface PostOverviewProps {
-  post: Data
+  post: IPost
 }
 const PostOverview = ({ post }: PostOverviewProps) => {
   return (
     <Container>
-      <h3>{post.title}</h3>
-      <p>{post.desc}</p>
+      <h3>{post.label}</h3>
+      <p>{post.description}</p>
       <Button color={Colors.bg_black}>detail</Button>
     </Container>
   )
 }
 const PostCardContainer = styled.div`
-  /* position: relative;
-  padding-left: 30%;
-  & > img {
-    position : 10
-    object-fit: cover;
-    
-  } */
   background-color: ${({ theme }) => theme.color.white};
   display: grid;
   gap: 6px;
 
   grid-template-columns: 0.4fr 0.6fr;
   /* grid-template-rows: 300px; */
+  grid-auto-rows : 1fr;
+  max-width:650px;
+  & > div{
+    position:relative;
+    padding-top:20%;
+
+    & > img {
+      position:absolute;
+      top:0;
+      left:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+   
+  }
+  }
 `
 const PostCard = ({ post }: PostOverviewProps) => {
   return (
     <PostCardContainer>
-      <Image src={post.url} width={500} height={500} alt={post.title} layout="responsive" />
+      <div>
+      <Image src={post.imageUrl}  alt={post.label} width={400} height={400}/>
+      </div>
       {/* <RatioCardImage imageUrl={post.url} ratio={0.5} /> */}
       <PostOverview post={post} />
     </PostCardContainer>

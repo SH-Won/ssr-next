@@ -1,9 +1,9 @@
 import useAuth from '@/hooks/useAuth'
 import useAxiosAuth from '@/hooks/useAxiosAuth'
 import useRefreshToken from '@/hooks/useRefreshToken'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { ComponentType, FunctionComponent, useEffect, useState } from 'react'
 
 interface RequiredAuthProps {
   children: React.ReactNode
@@ -27,10 +27,12 @@ const RequiredAuth = ({ children }: RequiredAuthProps) => {
       if (response.data.success) {
         setMountPage(true)
       }
-    } catch (e) {
-      if (e.response.status === 403) {
-        // const response = await refreshToken()
-        // checkAuth()
+    } catch (e: unknown) {
+      if (e instanceof AxiosError<any, any>) {
+        if (e.response?.status === 403) {
+          // const response = await refreshToken()
+          // checkAuth()
+        }
       }
     } finally {
       setLoading(false)
@@ -48,4 +50,13 @@ const RequiredAuth = ({ children }: RequiredAuthProps) => {
   return <>{mountPage && children}</>
 }
 
+export const withAuth =
+<P extends {}>(Component: ComponentType<P>) : React.FC<P> => 
+  (props: P) => {
+    return (
+      <RequiredAuth>
+        <Component {...props} />
+      </RequiredAuth>
+    )
+  }
 export default RequiredAuth

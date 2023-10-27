@@ -9,7 +9,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ['tmdb.org', 'themoviedb.org', 'https://image.tmdb.org/t/p/w500', 'image.tmdb.org'],
+    domains: ['tmdb.org', 'themoviedb.org', 'https://image.tmdb.org/t/p/w500', 'image.tmdb.org','res.cloudinary.com'],
   },
   // webpack: (config, options) => {
   //   config.cache = false
