@@ -68,45 +68,56 @@ const PostCardWrapper = styled.div`
   /* &:nth-child(2n + 1) {
     flex-direction: row-reverse;
   } */
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; */
+  display: grid;
+  .desktop & {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .tablet & {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .mobile & {
+    grid-template-columns: repeat(2, 1fr);
+    @media screen and (max-width: 450px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
   gap: 10px;
 `
 export const getServerSideProps = async () => {
   try {
-    const response = await axiosAuthInstance.get('/product',{
+    const response = await axiosAuthInstance.get('/product', {
       withCredentials: true,
     })
     console.log(response)
     return {
-      props : {
-        data : response.data
-      }
+      props: {
+        data: response.data,
+      },
     }
-
-  }catch(e){
+  } catch (e) {
     return {
-      props : {}
+      props: {},
     }
   }
-  
 }
 export type IPost = {
-  _id : string,
+  _id: string
   // productId: number
   label: string
   description: string
   imageUrl: string
-  imageUrls?: string []
+  imageUrls?: string[]
   category: number
-  }
+}
 interface Props {
-  data : {
-    products : IPost[]
+  data: {
+    products: IPost[]
   }
 }
-const MainPage = (props : Props) => {
+const MainPage = (props: Props) => {
   console.log(props)
   const [selectedIndex, setSelectedIndex] = useState<number>(6)
   const [opacity, setOpacity] = useState<number>(1)
@@ -129,11 +140,7 @@ const MainPage = (props : Props) => {
   return (
     <MainContainer>
       <BackGroundImage opacity={opacity}>
-        <Image
-          fill
-          src={datas[selectedIndex].imageUrl}
-          alt={datas[selectedIndex].label}
-        />
+        <Image fill src={datas[selectedIndex].imageUrl} alt={datas[selectedIndex].label} />
       </BackGroundImage>
       <CardContainer>
         <CardWrapper>

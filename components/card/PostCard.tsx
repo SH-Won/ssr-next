@@ -34,34 +34,23 @@ const PostOverview = ({ post }: PostOverviewProps) => {
 }
 const PostCardContainer = styled.div`
   background-color: ${({ theme }) => theme.color.white};
-  display: grid;
+  display: flex;
   gap: 6px;
-
-  grid-template-columns: 0.4fr 0.6fr;
-  /* grid-template-rows: 300px; */
-  grid-auto-rows : 1fr;
-  max-width:650px;
-  & > div{
-    position:relative;
-    padding-top:20%;
-
-    & > img {
-      position:absolute;
-      top:0;
-      left:0;
-    width:100%;
-    height:100%;
-    object-fit: cover;
-   
+  padding: 16px;
+  & > div {
+    & img {
+      border-radius: none;
+    }
   }
-  }
+  flex-direction: column;
 `
 const PostCard = ({ post }: PostOverviewProps) => {
   return (
     <PostCardContainer>
-      <div>
+      {/* <div>
       <Image src={post.imageUrl}  alt={post.label} width={400} height={400}/>
-      </div>
+      </div> */}
+      <RatioCardImage imageUrl={post.imageUrl} ratio={1} />
       {/* <RatioCardImage imageUrl={post.url} ratio={0.5} /> */}
       <PostOverview post={post} />
     </PostCardContainer>

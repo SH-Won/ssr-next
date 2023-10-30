@@ -50,13 +50,16 @@ const RequiredAuth = ({ children }: RequiredAuthProps) => {
   return <>{mountPage && children}</>
 }
 
-export const withAuth =
-<P extends {}>(Component: ComponentType<P>) : React.FC<P> => 
-  (props: P) => {
+export function withAuth<P extends object>(Component: ComponentType<P>): React.FC<P> {
+  function returnFunc(props: P) {
     return (
       <RequiredAuth>
         <Component {...props} />
       </RequiredAuth>
     )
   }
+  returnFunc.displayName = 'returnFunc'
+  return returnFunc
+}
+
 export default RequiredAuth
