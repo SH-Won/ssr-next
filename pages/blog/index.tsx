@@ -1,20 +1,25 @@
 import PostCard from '@/components/card/PostCard'
 
 import { datas } from '@/const/mock'
+import { useBreakPoints } from '@/hooks'
+import useModal from '@/hooks/useModal'
+import Masonry from '@/layout/Masonry'
 import RequiredAuth, { withAuth } from '@/layout/RequiredAuth'
 import { axiosAuthInstance } from '@/network/axios'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const MainContainer = styled.div`
   position: relative;
-  max-width: 1100px;
+  max-width: 1250px;
+  margin: 0 auto;
   width: 100%;
 `
 const BackGroundImage = styled.div<{ opacity: number }>`
   width: 100%;
-  height: 42vh;
+  height: 50vh;
   position: relative;
   & > img {
     /* position: absolute; */
@@ -64,34 +69,12 @@ const DirectionButton = styled.button<{ direction: 'left' | 'right' }>`
   height: 30px;
   border: transparent;
 `
-const PostCardWrapper = styled.div`
-  /* &:nth-child(2n + 1) {
-    flex-direction: row-reverse;
-  } */
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center; */
-  display: grid;
-  .desktop & {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .tablet & {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .mobile & {
-    grid-template-columns: repeat(2, 1fr);
-    @media screen and (max-width: 450px) {
-      grid-template-columns: repeat(1, 1fr);
-    }
-  }
-  gap: 10px;
-`
-export const getServerSideProps = async () => {
+
+export const getStaticProps = async () => {
   try {
     const response = await axiosAuthInstance.get('/product', {
       withCredentials: true,
     })
-    console.log(response)
     return {
       props: {
         data: response.data,
@@ -103,9 +86,9 @@ export const getServerSideProps = async () => {
     }
   }
 }
-export type IPost = {
+export type IProduct = {
   _id: string
-  // productId: number
+  productId: number
   label: string
   description: string
   imageUrl: string
@@ -114,13 +97,14 @@ export type IPost = {
 }
 interface Props {
   data: {
-    products: IPost[]
+    products: IProduct[]
   }
 }
 const MainPage = (props: Props) => {
-  console.log(props)
+  const router = useRouter()
   const [selectedIndex, setSelectedIndex] = useState<number>(6)
   const [opacity, setOpacity] = useState<number>(1)
+  const { showModal } = useModal()
   const handleLeft = () => {
     const index = selectedIndex - 1 < 0 ? datas.length - 1 : selectedIndex - 1
     setOpacity(0)
@@ -137,6 +121,16 @@ const MainPage = (props: Props) => {
       setOpacity(1)
     }, 300)
   }
+  const handleClick = (product: IProduct) => {
+    // router.push(location.pathname + `?productId=${product.productId}`)
+    showModal({
+      type: 'side',
+      props: {
+        product,
+      },
+    })
+  }
+  console.log('re render blog')
   return (
     <MainContainer>
       <BackGroundImage opacity={opacity}>
@@ -144,7 +138,7 @@ const MainPage = (props: Props) => {
       </BackGroundImage>
       <CardContainer>
         <CardWrapper>
-          <PostCard.Overview post={datas[selectedIndex]} />
+          <PostCard.Overview product={datas[selectedIndex]} />
           <ButtonWrapper>
             <DirectionButton onClick={handleLeft} direction="left">
               {'<'}
@@ -155,12 +149,13 @@ const MainPage = (props: Props) => {
           </ButtonWrapper>
         </CardWrapper>
       </CardContainer>
-
-      <PostCardWrapper>
+      <Masonry>
         {props.data.products.map((data) => (
-          <PostCard key={data.label + data._id} post={data} />
+          <PostCard key={data.label + data._id} product={data}>
+            <PostCard.Overview product={data} handleClick={handleClick} />
+          </PostCard>
         ))}
-      </PostCardWrapper>
+      </Masonry>
     </MainContainer>
   )
 }

@@ -13,6 +13,7 @@ import { theme, mixins } from '@/styles/theme'
 import ResponsiveWindow from '@/layout/ResponsiveWindow'
 import Navbar from '@/components/Navbar/Navbar'
 import { RecoilRoot } from 'recoil'
+import Modal from '@/components/modal/Modal'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
@@ -29,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <Navbar />
               <ResponsiveWindow>
                 <Component {...pageProps} />
+                <Modal />
               </ResponsiveWindow>
             </ThemeProvider>
           </Hydrate>
