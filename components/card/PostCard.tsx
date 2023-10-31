@@ -4,7 +4,7 @@ import { Button, Colors, RatioCardImage } from 'my-react-component'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -55,20 +55,19 @@ const PostCardContainer = styled.div`
   /* padding: 16px; */
   & > div {
     & img {
-      width: 100%;
+      /* width: 100%;
+      height: auto; */
     }
   }
   flex-direction: column;
 `
 const PostCard = ({ product, children }: PostOverviewProps) => {
+  const [load, setLoad] = useState('')
   return (
     <PostCardContainer>
       <div>
-        {/* <Image src={post.imageUrl} alt={post.label} fill /> */}
-        <img src={product.imageUrl} />
+        <RatioCardImage imageUrl={product.imageUrl} ratio={1 + Math.random() * 0.5} />
       </div>
-      {/* <RatioCardImage imageUrl={post.imageUrl} ratio={1} /> */}
-      {/* <RatioCardImage imageUrl={post.url} ratio={0.5} /> */}
       {children}
     </PostCardContainer>
   )

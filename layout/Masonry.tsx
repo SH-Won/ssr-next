@@ -10,37 +10,45 @@ const MasonryContainer = styled.div`
   display: grid;
   padding: 16px;
   .desktop & {
-    grid-template-columns: repeat(4, 1fr);
+    /* grid-template-columns: repeat(5, 1fr); */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
   .tablet & {
-    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: repeat(4, 1fr); */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
   .mobile & {
-    grid-template-columns: repeat(2, 1fr);
-    @media screen and (max-width: 450px) {
+    /* grid-template-columns: repeat(2, 1fr); */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* @media screen and (max-width: 450px) {
       grid-template-columns: repeat(1, 1fr);
-    }
+    } */
   }
   grid-gap: 10px;
+  grid-auto-rows: 0;
 `
 const Masonry = ({ children }: MasonryProps) => {
   const container = useRef<HTMLDivElement>(null)
-  // const {breakPointsClass} = useBreakPoints()
+  const { breakPointsClass } = useBreakPoints()
   useEffect(() => {
-    if (container!.current) {
-      console.log(container.current.children)
-      const containerHeight = container!.current.getBoundingClientRect().height as number
-      const containerChildren = container!.current.children ?? []
-
-      Array.prototype.forEach.call(containerChildren, (element: HTMLElement) => {
-        console.log(element.children[0].getBoundingClientRect().height)
-
-        element.style.gridRowEnd = `span ${Math.ceil(
-          element.children[0].getBoundingClientRect().height / 10 - 1
-        )}`
-      })
+    const setMasonry = () => {
+      console.log('load')
+      if (container!.current) {
+        const grid = container.current
+        const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'))
+        const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'))
+        Array.prototype.forEach.call(grid.children, (element: HTMLElement) => {
+          const height = Array.prototype.reduce.call(
+            element.children,
+            (acc, cur) => (acc += cur?.getBoundingClientRect().height),
+            0
+          ) as number
+          element.style.gridRowEnd = `span ${Math.ceil((height + rowGap) / (rowHeight + rowGap))}`
+        })
+      }
     }
-  }, [container.current, children])
+    setMasonry()
+  }, [container.current, children, breakPointsClass])
   return <MasonryContainer ref={container}>{children}</MasonryContainer>
 }
 
