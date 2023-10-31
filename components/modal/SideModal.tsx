@@ -2,11 +2,14 @@ import useModal from '@/hooks/useModal'
 import Masonry from '@/layout/Masonry'
 import { axiosAuthInstance } from '@/network/axios'
 import { IProduct } from '@/pages/blog'
+import { PopupBasicHeader } from 'my-react-component'
+import Image from 'next/image'
 
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PostCard from '../card/PostCard'
+import BackGroundImage from '../common/BackGroundImage'
 
 type SideModalProps = {
   product: IProduct
@@ -21,10 +24,30 @@ const SideModalContainer = styled.div<{ scrollTop: number }>`
   overflow-x: overlay;
 
   .desktop & {
-    width: 60%;
+    width: 40%;
     right: 0;
   }
 `
+const RatioImage = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* height: 100%; */
+  /* justify-self: center; */
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f3f4;
+  & > img {
+    width: 80%;
+  }
+`
+
 type ISubProduct = IProduct & { subProductId: number }
 
 const SideModal = ({ product }: SideModalProps) => {
@@ -55,7 +78,10 @@ const SideModal = ({ product }: SideModalProps) => {
 
   return (
     <SideModalContainer scrollTop={0}>
-      <button onClick={back}>close</button>
+      <PopupBasicHeader title="side" back={back} close={back} />
+      <RatioImage>
+        <img src={product.imageUrl} alt={product.label} />
+      </RatioImage>
       {data.length && (
         <Masonry>
           {data!.map((el) => {
