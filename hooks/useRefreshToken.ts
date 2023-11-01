@@ -2,9 +2,11 @@ import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import useAuth from './useAuth'
+import { useSetRecoilState } from 'recoil'
+import { _auth } from '@/store/auth'
 
 const useRefreshToken = () => {
-  const { setAuth } = useAuth()
+  const setAuth = useSetRecoilState(_auth)
   const router = useRouter()
   const timer = useRef<NodeJS.Timeout>()
 
@@ -32,10 +34,12 @@ const useRefreshToken = () => {
 
       return response.data.accessToken
     } catch (e) {
-      router.replace('/login')
+      console.log('refreshtoken is expired')
+      // router.replace('/login')
       if (e instanceof AxiosError<any, any>) {
+        console.log('refresh error')
         if (e.response?.status === 403) {
-          router.replace('/login')
+          // router.replace('/login')
         }
         //
       }

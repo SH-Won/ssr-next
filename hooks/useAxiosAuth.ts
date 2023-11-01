@@ -2,10 +2,12 @@ import { axiosAuthInstance } from '@/network/axios'
 import { useEffect } from 'react'
 import useAuth from './useAuth'
 import useRefreshToken from './useRefreshToken'
+import { useRecoilValue } from 'recoil'
+import { _auth } from '@/store/auth'
 
 const useAxiosAuth = () => {
   const refreshToken = useRefreshToken()
-  const { auth } = useAuth()
+  const auth = useRecoilValue(_auth)
 
   useEffect(() => {
     const requestIntercept = axiosAuthInstance.interceptors.request.use(
@@ -15,7 +17,10 @@ const useAxiosAuth = () => {
         }
         return config
       },
-      (error) => Promise.reject(error)
+      (error) => {
+        console.log('not login user')
+        return Promise.reject(error)
+      }
     )
 
     const responseIntercept = axiosAuthInstance.interceptors.response.use(
@@ -27,8 +32,9 @@ const useAxiosAuth = () => {
           const newAccessToken = await refreshToken()
           console.log(newAccessToken)
           prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`
-          return axiosAuthInstance(prevRequest)
+          if (newAccessToken) return axiosAuthInstance(prevRequest)
         }
+        console.log(error)
         return Promise.reject(error)
       }
     )

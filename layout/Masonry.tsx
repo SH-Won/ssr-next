@@ -48,7 +48,7 @@ const Masonry = ({ children }: MasonryProps) => {
       }
     }
     setMasonry()
-  }, [container.current, children, breakPointsClass])
+  }, [container.current, breakPointsClass])
   return <MasonryContainer ref={container}>{children}</MasonryContainer>
 }
 

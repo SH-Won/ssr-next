@@ -6,9 +6,10 @@ import useModal from '@/hooks/useModal'
 import Masonry from '@/layout/Masonry'
 import RequiredAuth, { withAuth } from '@/layout/RequiredAuth'
 import { axiosAuthInstance } from '@/network/axios'
+import axios from 'axios'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const MainContainer = styled.div`
@@ -72,7 +73,7 @@ const DirectionButton = styled.button<{ direction: 'left' | 'right' }>`
 
 export const getStaticProps = async () => {
   try {
-    const response = await axiosAuthInstance.get('/product', {
+    const response = await axios.get('http://localhost:5000/product', {
       withCredentials: true,
     })
     return {
@@ -130,7 +131,17 @@ const MainPage = (props: Props) => {
       },
     })
   }
-  console.log('re render blog')
+  const RenderMasonryProducts = useMemo(() => {
+    return (
+      <Masonry>
+        {props.data.products.map((data) => (
+          <PostCard key={data.label + data._id} product={data}>
+            <PostCard.Overview product={data} handleClick={handleClick} />
+          </PostCard>
+        ))}
+      </Masonry>
+    )
+  }, [])
   return (
     <MainContainer>
       <BackGroundImage opacity={opacity}>
@@ -149,13 +160,7 @@ const MainPage = (props: Props) => {
           </ButtonWrapper>
         </CardWrapper>
       </CardContainer>
-      <Masonry>
-        {props.data.products.map((data) => (
-          <PostCard key={data.label + data._id} product={data}>
-            <PostCard.Overview product={data} handleClick={handleClick} />
-          </PostCard>
-        ))}
-      </Masonry>
+      {RenderMasonryProducts}
     </MainContainer>
   )
 }
