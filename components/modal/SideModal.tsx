@@ -14,11 +14,11 @@ import BackGroundImage from '../common/BackGroundImage'
 type SideModalProps = {
   product: IProduct
 }
-const SideModalContainer = styled.div<{ scrollTop: number }>`
+const SideModalContainer = styled.div<{ scrolltop: number }>`
   position: fixed;
   width: 100%;
   height: 100%;
-  top: ${(props) => props.scrollTop}px;
+  top: ${(props) => props.scrolltop}px;
   z-index: 1000;
   background-color: ${({ theme }) => theme.color.white};
   overflow-x: overlay;
@@ -77,7 +77,7 @@ const SideModal = ({ product }: SideModalProps) => {
   }, [])
 
   return (
-    <SideModalContainer scrollTop={0}>
+    <SideModalContainer scrolltop={0}>
       <PopupBasicHeader title="side" back={back} close={back} />
       <RatioImage>
         <img src={product.imageUrl} alt={product.label} />

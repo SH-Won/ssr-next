@@ -124,6 +124,7 @@ const MainPage = (props: Props) => {
   }
   const handleClick = (product: IProduct) => {
     // router.push(location.pathname + `?productId=${product.productId}`)
+    router.push(location.pathname + `?productId=${product.productId}`, undefined, { shallow: true })
     showModal({
       type: 'side',
       props: {
@@ -131,6 +132,16 @@ const MainPage = (props: Props) => {
       },
     })
   }
+  // useEffect(() => {
+  //   if (router.query.productId) {
+  //     showModal({
+  //       type: 'side',
+  //       props: {
+  //         product,
+  //       },
+  //     })
+  //   }
+  // }, [router.query.productId])
   const RenderMasonryProducts = useMemo(() => {
     return (
       <Masonry>

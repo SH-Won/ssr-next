@@ -38,11 +38,11 @@ const PostOverview = ({ product, handleClick }: PostOverviewProps) => {
     <Container>
       <h3>{product.label}</h3>
       <p>{product.description}</p>
-      <Link href={location.pathname + `#productId=${product.productId}`}>
-        <Button color={Colors.bg_black} click={() => handleClick?.(product)}>
-          detail
-        </Button>
-      </Link>
+      {/* <Link href={location.pathname + `?productId=${product.productId}`} scroll={true}> */}
+      <Button color={Colors.bg_black} click={() => handleClick?.(product)}>
+        detail
+      </Button>
+      {/* </Link> */}
     </Container>
   )
 }
